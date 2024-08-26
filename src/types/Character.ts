@@ -18,7 +18,14 @@ url: string,
 created: string,
 }
 
+export interface Info {
+  count: number,
+  pages: number,
+  next: string,
+  prev: string,
+}
+
 export interface DataFromServer {
-  info: object,
+  info: Info,
   results: Character[],
 }

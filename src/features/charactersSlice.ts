@@ -1,45 +1,57 @@
-'use client';
+"use client";
 import { getAllCharacters } from "@/api/characters";
-import { Character } from "@/types/Character";
+import { Character, Info } from "@/types/Character";
+import { Gender, Species, Status } from "@/types/Status";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface CharactersState {
   characters: Character[];
-  status: 'idle' | 'loading' | 'failed';
+  status: "idle" | "loading" | "failed";
+  info: Info | null;
 }
 
 const initialState: CharactersState = {
   characters: [],
-  status: 'idle',
+  status: "idle",
+  info: null,
 };
 
-export const getCharactersAsync = createAsyncThunk(
-  'characters/fetchCharacters',
-  async (page: number) => {
-    const CharactersFromServer = await getAllCharacters(page);
+interface Props {
+  currentPage: number, 
+  search: string,
+  status: Status,
+  gender: Gender,
+  species: Species,
+}
 
-    return CharactersFromServer.results;
-  },
+export const getCharactersAsync = createAsyncThunk(
+  "characters/fetchCharacters",
+  async ({currentPage, search, status, gender, species}: Props) => {
+    const CharactersFromServer = await getAllCharacters(currentPage, search, status, gender, species);
+
+    return CharactersFromServer;
+  }
 );
 
 export const CharactersSlice = createSlice({
-  name: 'characters',
+  name: "characters",
   initialState,
   reducers: {},
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(getCharactersAsync.pending, state => {
-        state.status = 'loading';
+      .addCase(getCharactersAsync.pending, (state) => {
+        state.status = "loading";
       })
       .addCase(getCharactersAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.characters = action.payload;
+        state.status = "idle";
+        state.characters = action.payload.results;
+        state.info = action.payload.info;
       })
-      .addCase(getCharactersAsync.rejected, state => {
-        state.status = 'failed';
-      })
+      .addCase(getCharactersAsync.rejected, (state) => {
+        state.status = "failed";
+      });
   },
 });
 
-export const { } = CharactersSlice.actions;
+export const {} = CharactersSlice.actions;
 export default CharactersSlice.reducer;

@@ -1,9 +1,13 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import characterReducer from '@/features/charactersSlice';
+import charactersReducer from '@/features/charactersSlice';
+import filtersReducer from '@/features/filtersAndSearchSlice';
+import characterReducer from '@/features/selectedPersonSlice';
 
 export const store = configureStore({
   reducer: {
-    characters: characterReducer,
+    characters: charactersReducer,
+    filters: filtersReducer,
+    selectedPerson: characterReducer,
   }
 });
 

@@ -1,8 +1,6 @@
 import React from "react";
 import Pagination from "@mui/material/Pagination";
-
-
-const TOTAL_PAGES = 42;
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 interface Props {
   currentPage: number;
@@ -11,6 +9,7 @@ interface Props {
 
 
 export const Paginations: React.FC<Props> = ({ currentPage, onPageChange }) => {
+  const total = useAppSelector(state => state.characters.info);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     onPageChange(value);
@@ -18,7 +17,7 @@ export const Paginations: React.FC<Props> = ({ currentPage, onPageChange }) => {
 
   return (
     <Pagination
-      count={TOTAL_PAGES}
+      count={total?.pages}
       variant="outlined"
       color="primary"
       page={currentPage}
