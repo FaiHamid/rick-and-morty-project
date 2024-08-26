@@ -1,7 +1,6 @@
 import { Character } from "@/types/Character"
 import Image from "next/image";
 import cn from 'classnames';
-import classNames from "classnames";
 import { useAppDispatch } from "@/store/hooks";
 import { changeSelectedPerson } from "@/features/selectedPersonSlice";
 

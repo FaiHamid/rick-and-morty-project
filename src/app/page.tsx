@@ -7,8 +7,7 @@ import { PersonCard } from "@/components/personCard/PersonCard";
 import { Paginations } from "@/components/pagination/Pagination";
 import { FiltersAndSearch } from "@/components/FiltersAndSearch/FiltersAndSearch";
 import { NoResults } from "@/components/NoResults";
-import { Character } from "@/types/Character";
-import { Modal } from "@/components/modal";
+import { Modal } from "@/components/Modal";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
